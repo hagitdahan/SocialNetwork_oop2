@@ -1,5 +1,4 @@
 from SocialNetwork import SocialNetwork
-from A import A,B
 
 def main():
     # Creating the network

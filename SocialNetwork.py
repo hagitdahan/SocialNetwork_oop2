@@ -16,23 +16,39 @@ class SocialNetwork(object):
     def __init__(self,name):
         if not SocialNetwork.__instance.__initialized:
             self.name = name
+            self.users=[]
             SocialNetwork.__instance.__initialized = True
 
+    def contains(self,username):
+        for user in self.users:
+            if username == user.name:
+                return user
+        return None
+
     def sign_up(self,username,password):
-        #check if the username in the publisher bank of users
-        #add user
-        pass
+        if(self.contains(username)==None and len(password)>=4 and len(password)<=8):
+            new_user = User(username,password)
+            self.users.append(new_user)
 
 
     def log_out(self,username):
         #edit the status of the user to offline in publisher bank
-        pass
+        tmp_user=self.contains(username)
+        if tmp_user is not None:
+            tmp_user.online=False
+
 
     def log_in(self,username,password):
         # edit the status of the user to offline in publisher bank
-        pass
+        tmp_user=self.contains(username)
+        if tmp_user is not None and tmp_user.authenticate(password):
+            tmp_user.online=True
+
 
     def __str__(self):
         result = f"{self.name} social network:"
         #print all the users in publisher
-        pass
+        #check if this func print well
+        for user in self.users:
+            result += user
+

@@ -2,35 +2,31 @@ import User
 
 class Post:
 
-    def __init__(self,owner):
-        self.isChanged = False
+    def __init__(self,owner,password):
         self.owner = owner
-        # self.likes = []
-        # self.comments = []
+        self.__password=password
 
     def like(self,user):
-        self.isChanged = True
-        # self.likes.append(user)
-        User.ManageUsers.notifyUser(user,"Like")
+        #edit the post in publisher
+        pass
 
     def comment(self,user,comment_text):
-        self.isChanged = True
-        # self.comments.append(user)
-        User.ManageUsers.notifyUser(user,"Comment",comment_text)
+        # edit the post in publisher
+        pass
 
 class PostFactory:
     @staticmethod
-    def CreatePost(type,owner,text,price,location):
+    def CreatePost(password,type,owner,text,price,location):
         if type == "Text":
-            return TextPost(owner=owner,text=text)
+            return TextPost(owner=owner,password=password,text=text)
         elif type == "Image":
-            return ImagePost(owner=owner,text=text)
+            return ImagePost(owner=owner,password=password,text=text)
         elif type == "Sale":
-            return SalePost(owner=owner,product=text,price=price,location=location)
+            return SalePost(owner=owner,password=password,product=text,price=price,location=location)
 
 class SalePost(Post):
-    def __init__(self,owner,product,price,location):
-        super().__init__(owner)
+    def __init__(self,owner,password,product,price,location):
+        super().__init__(owner,password)
         self.product = product
         self.price = price
         self.location = location
@@ -38,12 +34,11 @@ class SalePost(Post):
 
 
     def discount(self,quantity,user_password):
-        new_price = self.price - (self.price*(quantity/100))
-        User.ManageUsers.saleUpdate(self,new_price,user_password)
+        #edit post in publisher
+        pass
 
     def sold(self,user_password):
-        self.sold = True
-        User.ManageUsers.saleUpdate(self, -1, user_password)
+        # edit post in publisher
         pass
 
     def __str__(self):
@@ -53,8 +48,8 @@ class SalePost(Post):
             return f"{self.owner.name} posted a product for sale:\n{self.product}, price: {self.price}, location: {self.location}"
 
 class ImagePost(Post):
-    def __init__(self,owner,image_url):
-        super().__init__(owner)
+    def __init__(self,owner,password,image_url):
+        super().__init__(owner,password)
         self.image_url = image_url
 
     def display(self):
@@ -63,8 +58,8 @@ class ImagePost(Post):
         pass
 
 class TextPost(Post):
-    def __init__(self,owner,text):
-        super().__init__(owner)
+    def __init__(self,owner,password,text):
+        super().__init__(owner,password)
         self.text = text
 
     def __str__(self):

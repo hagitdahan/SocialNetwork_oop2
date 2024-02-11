@@ -19,24 +19,20 @@ class SocialNetwork(object):
             SocialNetwork.__instance.__initialized = True
 
     def sign_up(self,username,password):
-        # Check name and Password
-        new_user = User(username,password)
-        return new_user
+        #check if the username in the publisher bank of users
+        #add user
+        pass
+
 
     def log_out(self,username):
-        for user in User.users:
-            if user.username == username:
-                user.online = False
-                print(f"{username} disconnected")
+        #edit the status of the user to offline in publisher bank
+        pass
 
     def log_in(self,username,password):
-        for user in User.users:
-            if user.username == username and user.password == password:
-                user.online = True
-                print(f"{username} connected")
+        # edit the status of the user to offline in publisher bank
+        pass
 
     def __str__(self):
         result = f"{self.name} social network:"
-        for user in User.users:
-            result += f"\nUser name: {user.username}, Number of posts: {len(user.posts)}, Number of followers: {len(user.followers)}"
-        return result
+        #print all the users in publisher
+        pass

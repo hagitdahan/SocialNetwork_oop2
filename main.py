@@ -60,7 +60,6 @@ def main():
     print()
 
     # Defining the product as sold
-    p3.sold("d")
     p3.sold("pass3")
     print()
 
@@ -96,7 +95,7 @@ def main():
     print()
 
     # Network printing
-    print(network)
+    print(network, end='')
 
 
 if __name__ == '__main__':

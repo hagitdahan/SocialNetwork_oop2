@@ -32,7 +32,7 @@ class User:
 
     def __str__(self):
         return (f"User name: {self.name} Number of posts: {self.posts_count},"
-                f" Number of followers: {NotificationService.followers_count()}")
+                f" Number of followers: {NotificationService.followers_count(self)}")
 
     def authenticate(self,password):
         return password==self.__password

@@ -1,5 +1,6 @@
 from SocialNetwork import SocialNetwork
 
+
 def main():
     # Creating the network
     network = SocialNetwork("Twitter")
@@ -59,6 +60,7 @@ def main():
     print()
 
     # Defining the product as sold
+    p3.sold("d")
     p3.sold("pass3")
     print()
 

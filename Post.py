@@ -26,7 +26,7 @@ class SalePost(Post):
         self.product = product
         self.price = price
         self.location = location
-        self.sold = False
+        self.sold_state = False
 
 
     def discount(self,quantity,user_password):
@@ -38,7 +38,7 @@ class SalePost(Post):
     def sold(self,user_password):
         permission = self.owner.authenticate(user_password)
         if permission:
-            self.sold = True
+            self.sold_state = True
             NotificationService.notify_sold(self.owner,self.product,self.price,self.location)
 
     def __str__(self):

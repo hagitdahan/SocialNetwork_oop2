@@ -6,7 +6,6 @@ class NotificationService:
     def add_follower(user_to_follow,user):
         if user_to_follow not in NotificationService.__followers:
             NotificationService.__followers[user_to_follow] = []
-        # if NotificationService.__followers[user_to_follow] is list:
         NotificationService.__followers[user_to_follow].append(user)
         #
         print(f"{user.name} started following {user_to_follow.name}")

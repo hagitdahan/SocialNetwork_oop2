@@ -11,10 +11,10 @@ class User:
         self.__notifications = []
 
     def follow(self,user):
-        NotificationService.add_follower(self,user)
+        NotificationService.add_follower(user,self)
 
     def unfollow(self,user):
-        NotificationService.remove_follower(self, user)
+        NotificationService.remove_follower(user, self)
 
     def publish_post(self,type,text,price="",location=""):
         new_post = PostFactory.CreatePost(type,self,text,price,location)

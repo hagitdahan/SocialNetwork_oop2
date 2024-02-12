@@ -1,28 +1,39 @@
 from Post import PostFactory
+from NotificationService import NotificationService
+
 
 class User:
     def __init__(self,name,password):
         self.name = name
         self.__password = password
         self.online = True
-        self.followers = []
-        self.posts = []
-        self.notifications=[]
+        self.posts_count = 0
+        self.__notifications = []
 
     def follow(self,user):
-        user.followers.append(self)
-        print(f"{self.name} started following {user.name}")
+        NotificationService.add_follower(self,user)
+
     def unfollow(self,user):
-        user.followers.remove(self)
-        print(f"{self.name} unfollowed {user.name}")
+        NotificationService.remove_follower(self, user)
+
     def publish_post(self,type,text,price="",location=""):
-        #add password to create post func
-        pass
+        new_post = PostFactory.CreatePost(type,self,text,price,location)
+        self.posts_count += 1
+        NotificationService.notify_new_post(self)
+        return new_post
+
     def print_notifications(self):
-        pass
+        print(f"{self.name} Notifications: ")
+        for string in self.__notifications:
+            print(string)
+
+    def push_notification(self,string):
+        self.__notifications.append(string)
+
     def __str__(self):
-        #print(f"{self.name}")
-        pass
+        return (f"User name: {self.name} Number of posts: {self.posts_count},"
+                f" Number of followers: {NotificationService.followers_count()}")
+
     def authenticate(self,password):
         return password==self.__password
 

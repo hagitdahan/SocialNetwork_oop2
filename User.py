@@ -1,28 +1,36 @@
+import ObserveDP
+from ObserveDP import Observer
 from Post import PostFactory
+
 
 class User:
     def __init__(self,name,password):
         self.name = name
         self.__password = password
+        self.observer = ObserveDP.Observer(self.name)
+        self.observable = ObserveDP.Observerble(self.name)
         self.online = True
-        self.followers = []
-        self.posts = []
-        self.notifications=[]
+        self.posts_count = 0
 
     def follow(self,user):
-        user.followers.append(self)
-        print(f"{self.name} started following {user.name}")
+        self.observable.add_follower(user.observer)
+
     def unfollow(self,user):
-        user.followers.remove(self)
-        print(f"{self.name} unfollowed {user.name}")
+        self.observable.remove_follower(user.observer)
+
     def publish_post(self,type,text,price="",location=""):
-        #add password to create post func
-        pass
+        new_post = PostFactory.CreatePost(type,self,text,price,location)
+        self.posts_count += 1
+        self.observable.update_new_post(new_post)
+        return new_post
+
     def print_notifications(self):
-        pass
+        print(self.observer)
+
     def __str__(self):
-        #print(f"{self.name}")
-        pass
+        return (f"User name: {self.name} Number of posts: {self.posts_count},"
+                f" Number of followers: {NotificationService.followers_count(self)}")
+
     def authenticate(self,password):
         return password==self.__password
 

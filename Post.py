@@ -1,45 +1,44 @@
-import User
-
 class Post:
 
-    def __init__(self,owner,password):
+    def __init__(self,owner):
         self.owner = owner
-        self.__password=password
 
     def like(self,user):
-        #edit the post in publisher
-        pass
+        user.observer.like_post(self.owner.observer)
 
     def comment(self,user,comment_text):
-        # edit the post in publisher
-        pass
+        user.observer.comment_post(self.owner.observer,comment_text)
 
 class PostFactory:
     @staticmethod
-    def CreatePost(password,type,owner,text,price,location):
+    def CreatePost(type,owner,text,price,location):
         if type == "Text":
-            return TextPost(owner=owner,password=password,text=text)
+            return TextPost(owner=owner,text=text)
         elif type == "Image":
-            return ImagePost(owner=owner,password=password,text=text)
+            return ImagePost(owner,text)
         elif type == "Sale":
-            return SalePost(owner=owner,password=password,product=text,price=price,location=location)
+            return SalePost(owner=owner,product=text,price=price,location=location)
 
 class SalePost(Post):
-    def __init__(self,owner,password,product,price,location):
-        super().__init__(owner,password)
+    def __init__(self,owner,product,price,location):
+        super().__init__(owner)
         self.product = product
         self.price = price
         self.location = location
-        self.sold = False
+        self.sold_state = False
 
 
     def discount(self,quantity,user_password):
-        #edit post in publisher
-        pass
+        permission = self.owner.authenticate(user_password)
+        if permission:
+            self.price = self.price - self.price * (quantity / 100)
+            NotificationService.notify_discount(self.owner,self.price)
 
     def sold(self,user_password):
-        # edit post in publisher
-        pass
+        permission = self.owner.authenticate(user_password)
+        if permission:
+            self.sold_state = True
+            NotificationService.notify_sold(self.owner,self.product,self.price,self.location)
 
     def __str__(self):
         if(self.sold):
@@ -48,8 +47,8 @@ class SalePost(Post):
             return f"{self.owner.name} posted a product for sale:\n{self.product}, price: {self.price}, location: {self.location}"
 
 class ImagePost(Post):
-    def __init__(self,owner,password,image_url):
-        super().__init__(owner,password)
+    def __init__(self,owner,image_url):
+        super().__init__(owner)
         self.image_url = image_url
 
     def display(self):
@@ -58,9 +57,10 @@ class ImagePost(Post):
         pass
 
 class TextPost(Post):
-    def __init__(self,owner,password,text):
-        super().__init__(owner,password)
+    def __init__(self,owner,text):
+        super().__init__(owner)
         self.text = text
 
     def __str__(self):
-        pass
+        result = f"{self.name} published a post:\n{self.text}"
+        return result

@@ -1,7 +1,4 @@
 from User import User
-## Social Network - Singleton V
-## Factroy - Posts (Which type of post to create) V
-## User - Observer
 
 class SocialNetwork(object):
 
@@ -29,6 +26,7 @@ class SocialNetwork(object):
         if(self.contains(username)==None and len(password)>=4 and len(password)<=8):
             new_user = User(username,password)
             self.users.append(new_user)
+            return new_user
 
 
     def log_out(self,username):
@@ -47,8 +45,6 @@ class SocialNetwork(object):
 
     def __str__(self):
         result = f"{self.name} social network:"
-        #print all the users in publisher
-        #check if this func print well
         for user in self.users:
             result += user
 

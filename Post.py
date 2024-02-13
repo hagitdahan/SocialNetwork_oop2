@@ -1,4 +1,3 @@
-from NotificationService import NotificationService
 class Post:
 
     def __init__(self,owner):

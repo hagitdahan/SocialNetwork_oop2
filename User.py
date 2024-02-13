@@ -1,7 +1,6 @@
 import ObserveDP
 from ObserveDP import Observer
 from Post import PostFactory
-from NotificationService import NotificationService
 
 
 class User:

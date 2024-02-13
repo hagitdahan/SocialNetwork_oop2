@@ -5,10 +5,10 @@ class Post:
         self.owner = owner
 
     def like(self,user):
-        NotificationService.notify_new_like(self.owner,user)
+        user.observer.like_post(self.owner.observer)
 
     def comment(self,user,comment_text):
-        NotificationService.notify_new_comment(self.owner,user,comment_text)
+        user.observer.comment_post(self.owner.observer,comment_text)
 
 class PostFactory:
     @staticmethod
@@ -63,4 +63,5 @@ class TextPost(Post):
         self.text = text
 
     def __str__(self):
-        pass
+        result = f"{self.name} published a post:\n{self.text}"
+        return result

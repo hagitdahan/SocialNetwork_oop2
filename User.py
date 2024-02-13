@@ -1,3 +1,5 @@
+import ObserveDP
+from ObserveDP import Observer
 from Post import PostFactory
 from NotificationService import NotificationService
 
@@ -6,29 +8,25 @@ class User:
     def __init__(self,name,password):
         self.name = name
         self.__password = password
+        self.observer = ObserveDP.Observer(self.name)
+        self.observable = ObserveDP.Observerble(self.name)
         self.online = True
         self.posts_count = 0
-        self.__notifications = []
 
     def follow(self,user):
-        NotificationService.add_follower(user,self)
+        self.observable.add_follower(user.observer)
 
     def unfollow(self,user):
-        NotificationService.remove_follower(user, self)
+        self.observable.remove_follower(user.observer)
 
     def publish_post(self,type,text,price="",location=""):
         new_post = PostFactory.CreatePost(type,self,text,price,location)
         self.posts_count += 1
-        NotificationService.notify_new_post(self)
+        self.observable.update_new_post(new_post)
         return new_post
 
     def print_notifications(self):
-        print(f"{self.name} Notifications: ")
-        for string in self.__notifications:
-            print(string)
-
-    def push_notification(self,string):
-        self.__notifications.append(string)
+        print(self.observer)
 
     def __str__(self):
         return (f"User name: {self.name} Number of posts: {self.posts_count},"

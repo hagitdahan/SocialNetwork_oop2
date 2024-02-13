@@ -1,5 +1,5 @@
 class NotificationService:
-
+    # Dict[Observable] = [Observers]
     __followers = {}
 
     @staticmethod

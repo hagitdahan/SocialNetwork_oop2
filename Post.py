@@ -61,7 +61,7 @@ class ImagePost(Post):
             pic = mpimg.imread(self.image_url)
             plt.imshow(pic)
             plt.show()
-            print("Shows picture!")
+            print("Shows picture")
     def __str__(self):
         return f"{self.owner.name} posted a picture\n"
 

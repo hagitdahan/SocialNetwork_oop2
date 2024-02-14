@@ -13,23 +13,26 @@ class User:
         self.posts_count = 0
 
     def follow(self,user):
-        self.observable.add_follower(user.observer)
+        if self.online:
+            user.observable.add_observer(self.observer)
 
     def unfollow(self,user):
-        self.observable.remove_follower(user.observer)
+        if self.online:
+            user.observable.remove_observer(self.observer)
 
     def publish_post(self,type,text,price="",location=""):
-        new_post = PostFactory.CreatePost(type,self,text,price,location)
-        self.posts_count += 1
-        self.observable.update_new_post(new_post)
-        return new_post
+        if self.online:
+            new_post = PostFactory.CreatePost(type,self,text,price,location)
+            self.posts_count += 1
+            self.observable.update_new_post(new_post)
+            return new_post
 
     def print_notifications(self):
         print(self.observer)
 
     def __str__(self):
         return (f"User name: {self.name} Number of posts: {self.posts_count},"
-                f" Number of followers: {NotificationService.followers_count(self)}")
+                f" Number of followers: {self.observable.num_followers()}")
 
     def authenticate(self,password):
         return password==self.__password

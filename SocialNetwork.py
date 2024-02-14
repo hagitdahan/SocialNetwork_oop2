@@ -45,7 +45,7 @@ class SocialNetwork(object):
 
 
     def __str__(self):
-        result = f"{self.name} social network:"
+        result = f"{self.name} social network:\n"
         for user in self.users:
-            result += "\n" + user.__str__()
+            result += user.__str__() + "\n"
         return result

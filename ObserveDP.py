@@ -17,7 +17,7 @@ class Observer:
             Observer.push_notification(f"{self.name} commented on your post")
             print(f"notification to {Observer.name}: {self.name} commented on your post: {comment}")
     def __str__(self):
-        result = f"{self.name}'s Notifications:"
+        result = f"{self.name}'s notifications:"
         for notification in self.notificatins:
             result += "\n" + notification
         return result

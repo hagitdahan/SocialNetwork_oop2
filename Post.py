@@ -47,9 +47,9 @@ class SalePost(Post):
 
     def __str__(self):
         if(self.sold):
-            return f"{self.owner.name} posted a product for sale:\nSold! {self.product}, price: {self.price}, location: {self.location}\n"
+            return f"{self.owner.name} posted a product for sale:\nSold! {self.product}, price: {self.price}, pickup from: {self.location}\n"
         else:
-            return f"{self.owner.name} posted a product for sale:\n{self.product}, price: {self.price}, location: {self.location}\n"
+            return f"{self.owner.name} posted a product for sale:\nfor sale! {self.product}, price: {self.price}, pickup from: {self.location}\n"
 
 class ImagePost(Post):
     def __init__(self,owner,image_url):

@@ -31,7 +31,7 @@ class User:
         print(self.observer)
 
     def __str__(self):
-        return (f"User name: {self.name} Number of posts: {self.posts_count},"
+        return (f"User name: {self.name}, Number of posts: {self.posts_count},"
                 f" Number of followers: {self.observable.num_followers()}")
 
     def authenticate(self,password):

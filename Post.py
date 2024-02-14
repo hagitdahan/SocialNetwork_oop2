@@ -46,10 +46,10 @@ class SalePost(Post):
             self.owner.observable.update_sold_post()
 
     def __str__(self):
-        if(self.sold):
+        if(self.sold_state):
             return f"{self.owner.name} posted a product for sale:\nSold! {self.product}, price: {self.price}, pickup from: {self.location}\n"
         else:
-            return f"{self.owner.name} posted a product for sale:\nfor sale! {self.product}, price: {self.price}, pickup from: {self.location}\n"
+            return f"{self.owner.name} posted a product for sale:\nFor sale! {self.product}, price: {self.price}, pickup from: {self.location}\n"
 
 class ImagePost(Post):
     def __init__(self,owner,image_url):

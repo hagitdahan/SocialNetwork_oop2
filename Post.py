@@ -1,13 +1,18 @@
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
 class Post:
 
     def __init__(self,owner):
         self.owner = owner
 
     def like(self,user):
-        user.observer.like_post(self.owner.observer)
+        if user.online:
+            user.observer.like_post(self.owner.observer)
 
     def comment(self,user,comment_text):
-        user.observer.comment_post(self.owner.observer,comment_text)
+        if user.online:
+            user.observer.comment_post(self.owner.observer,comment_text)
 
 class PostFactory:
     @staticmethod
@@ -30,21 +35,21 @@ class SalePost(Post):
 
     def discount(self,quantity,user_password):
         permission = self.owner.authenticate(user_password)
-        if permission:
+        if permission and self.owner.online:
             self.price = self.price - self.price * (quantity / 100)
-            NotificationService.notify_discount(self.owner,self.price)
+            self.owner.observable.update_discount_post(self.price)
 
     def sold(self,user_password):
         permission = self.owner.authenticate(user_password)
-        if permission:
+        if permission and self.owner.online:
             self.sold_state = True
-            NotificationService.notify_sold(self.owner,self.product,self.price,self.location)
+            self.owner.observable.update_sold_post()
 
     def __str__(self):
         if(self.sold):
-            return f"{self.owner.name} posted a product for sale:\nSold! {self.product}, price: {self.price}, location: {self.location}"
+            return f"{self.owner.name} posted a product for sale:\nSold! {self.product}, price: {self.price}, location: {self.location}\n"
         else:
-            return f"{self.owner.name} posted a product for sale:\n{self.product}, price: {self.price}, location: {self.location}"
+            return f"{self.owner.name} posted a product for sale:\n{self.product}, price: {self.price}, location: {self.location}\n"
 
 class ImagePost(Post):
     def __init__(self,owner,image_url):
@@ -52,9 +57,14 @@ class ImagePost(Post):
         self.image_url = image_url
 
     def display(self):
-        pass
+        if self.owner.online:
+            pic = mpimg.imread(self.image_url)
+            plt.imshow(pic)
+            plt.show()
+            print("Shows picture!")
     def __str__(self):
-        pass
+        return f"{self.owner.name} posted a picture\n"
+
 
 class TextPost(Post):
     def __init__(self,owner,text):
@@ -62,5 +72,5 @@ class TextPost(Post):
         self.text = text
 
     def __str__(self):
-        result = f"{self.name} published a post:\n{self.text}"
+        result = f"{self.owner.name} published a post:\n\"{self.text}\"\n"
         return result

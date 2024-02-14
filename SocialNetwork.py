@@ -34,17 +34,18 @@ class SocialNetwork(object):
         tmp_user=self.contains(username)
         if tmp_user is not None:
             tmp_user.online=False
-
+            print(f"{username} disconnected")
 
     def log_in(self,username,password):
         # edit the status of the user to offline in publisher bank
         tmp_user=self.contains(username)
         if tmp_user is not None and tmp_user.authenticate(password):
             tmp_user.online=True
+            print(f"{username} connected")
 
 
     def __str__(self):
         result = f"{self.name} social network:"
         for user in self.users:
-            result += user
-
+            result += "\n" + user.__str__()
+        return result
